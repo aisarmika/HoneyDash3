@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HoneyDash | Secure Access</title>
+    <link rel="stylesheet" href="css/login-style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body class="login-page">
+    <!-- Minimalist Background -->
+    <div class="bg-grid"></div>
+
+    <div class="login-wrapper">
+        <!-- Left Info Panel -->
+        <div class="login-info">
+            <div class="brand">
+                <div class="logo-icon">
+                    <i class="fas fa-bug"></i>
+                </div>
+                <h1>Honey<span class="logo-highlight">Dash</span></h1>
+                <p class="subtitle">Threat Intelligence Platform</p>
+            </div>
+
+
+
+            <div class="recent-activity">
+                <h3><i class="fas fa-history"></i> Recent Activity</h3>
+                <div class="activity-log">
+                    <div class="activity-item">
+                        <span class="time">14:32:05</span>
+                        <span class="event">SSH brute force attempt</span>
+                        <span class="source">192.168.1.105</span>
+                    </div>
+                    <div class="activity-item">
+                        <span class="time">14:30:22</span>
+                        <span class="event">Port scan detected</span>
+                        <span class="source">10.0.0.45</span>
+                    </div>
+                    <div class="activity-item">
+                        <span class="time">14:28:17</span>
+                        <span class="event">Malware download attempt</span>
+                        <span class="source">203.0.113.25</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Login Form -->
+        <div class="login-form-container">
+            <div class="form-header">
+                <h2>Secure Authentication</h2>
+                <p>Access restricted to authorized personnel</p>
+            </div>
+
+            <form id="loginForm" class="login-form">
+                <div class="input-group">
+                    <label for="username">
+                        <i class="fas fa-user"></i>
+                        <span>Username</span>
+                    </label>
+                    <input type="text" id="username" placeholder="Enter username" class="form-input">
+                </div>
+
+                <div class="input-group">
+                    <label for="password">
+                        <i class="fas fa-key"></i>
+                        <span>Password</span>
+                    </label>
+                    <div class="password-wrapper">
+                        <input type="password" id="password" placeholder="Enter password" class="form-input">
+                        <button type="button" class="toggle-password" id="togglePassword">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="role">
+                        <i class="fas fa-user-tag"></i>
+                        <span>Access Level</span>
+                    </label>
+                    <select id="role" class="form-input">
+                        <option value="analyst">Security Analyst</option>
+                        <option value="admin">System Administrator</option>
+                        <option value="viewer">Read-Only Viewer</option>
+                    </select>
+                </div>
+
+                <div class="form-options">
+                    <label class="checkbox">
+                        <input type="checkbox" id="remember">
+                        <span>Maintain session</span>
+                    </label>
+                    <a href="#" class="forgot-password">Credentials lost?</a>
+                </div>
+
+                <button type="submit" class="login-button">
+                    <i class="fas fa-sign-in-alt"></i>
+                    <span>Authenticate</span>
+                </button>
+
+                <div class="public-access">
+                    <div class="divider">
+                        <span>OR</span>
+                    </div>
+                    <button type="button" class="public-button" id="publicAccessBtn">
+                        <i class="fas fa-external-link-alt"></i>
+                        <span>Public Dashboard</span>
+                    </button>
+                    <p class="access-note">
+                        <i class="fas fa-info-circle"></i>
+                        Public access provides sanitized threat data for awareness purposes.
+                    </p>
+                </div>
+            </form>
+
+            <div class="form-footer">
+                <div class="credentials-hint">
+                    <p><strong>Demo Access:</strong></p>
+                    <p>Analyst: <code>analyst</code> / <code>honeydash2024</code></p>
+                    <p>Admin: <code>admin</code> / <code>admin@honeydash</code></p>
+                </div>
+                <div class="system-info">
+                    <p>v2.1.4 | UUM Cybersecurity Lab</p>
+                    <p>© 2024 HoneyDash Project</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/login-script.js"></script>
+</body>
+
+</html>

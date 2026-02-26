@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | HoneyDash Threat Intelligence</title>
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="css/dashboard-style.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/map-fixes.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- External Libraries -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <!-- Add this for better map compatibility -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+</head>
+
+<body class="dashboard-page">
+    <!-- Top Navigation Bar -->
+    <nav class="dashboard-nav">
+        <div class="nav-left">
+            <div class="nav-brand">
+                <i class="fas fa-bug"></i>
+                <h1>Honey<span class="logo-highlight">Dash</span></h1>
+                <span class="nav-subtitle">Threat Intelligence Platform</span>
+            </div>
+
+
+            <div class="nav-center">
+                <div class="nav-quick-actions">
+                    <button class="quick-btn" title="Refresh Data" id="refreshBtn">
+                        <i class="fas fa-sync-alt"></i>
+                    </button>
+                    <button class="quick-btn" title="Fullscreen" id="fullscreenBtn">
+                        <i class="fas fa-expand"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="nav-right">
+                <div class="nav-time">
+                    <i class="fas fa-clock"></i>
+                    <span id="currentTime">14:45:23 UTC</span>
+                </div>
+
+                <div class="nav-user">
+                    <div class="user-info">
+                        <span class="user-name" id="userDisplay">Loading...</span>
+                        <span class="user-role" id="roleDisplay">Loading...</span>
+                    </div>
+                    <div class="user-avatar">
+                        <i class="fas fa-user-shield"></i>
+                    </div>
+                    <div class="user-menu">
+                        <button class="menu-btn">
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="dropdown-menu">
+                            <a href="#"><i class="fas fa-user-cog"></i> Profile Settings</a>
+                            <a href="#"><i class="fas fa-cogs"></i> System Preferences</a>
+                            <a href="#"><i class="fas fa-chart-line"></i> Performance Metrics</a>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="nav-alert" id="alertButton">
+                    <i class="fas fa-bell"></i>
+                    <span class="alert-count">12</span>
+                </button>
+
+                <!-- Mobile Menu Toggle -->
+                <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+    </nav>
+
+    <!-- Alert Panel (Hidden by default) -->
+    <div class="alert-panel" id="alertPanel">
+        <div class="alert-header">
+            <h3><i class="fas fa-exclamation-triangle"></i> Active Alerts</h3>
+            <button class="close-panel" id="closeAlertPanel">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="alert-list" id="alertList">
+            <!-- Alerts will be populated by JavaScript -->
+        </div>
+    </div>
+
+    <!-- Main Dashboard Content -->
+    <div class="dashboard-container">
+        <!-- Left Sidebar -->
+        <aside class="dashboard-sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h3><i class="fas fa-stream"></i> Navigation</h3>
+                <button class="sidebar-close" id="sidebarClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active" data-page="overview">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span>Overview</span>
+                </a>
+                <a href="#" class="nav-item" data-page="attack-map">
+                    <i class="fas fa-map-marked-alt"></i>
+                    <span>Attack Map</span>
+                </a>
+                <a href="#" class="nav-item" data-page="analytics">
+                    <i class="fas fa-chart-bar"></i>
+                    <span>Analytics</span>
+                </a>
+                <a href="#" class="nav-item" data-page="sessions">
+                    <i class="fas fa-terminal"></i>
+                    <span>Sessions</span>
+                    <span class="badge">47</span>
+                </a>
+                <a href="#" class="nav-item" data-page="threat-intel">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Threat Intel</span>
+                </a>
+                <a href="#" class="nav-item" data-page="configuration">
+                    <i class="fas fa-cogs"></i>
+                    <span>Configuration</span>
+                </a>
+                <a href="#" class="nav-item" data-page="log-explorer">
+                    <i class="fas fa-database"></i>
+                    <span>Log Explorer</span>
+                </a>
+                <a href="#" class="nav-item" data-page="documentation">
+                    <i class="fas fa-question-circle"></i>
+                    <span>Documentation</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="honeypot-status">
+                    <h4><i class="fas fa-server"></i> Honeypot Status</h4>
+                    <div class="status-list" id="honeypotStatusList">
+                        <!-- Status items will be populated dynamically -->
+                    </div>
+                </div>
+                <div class="sidebar-collapse" id="sidebarCollapse">
+                    <i class="fas fa-chevron-left"></i>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="dashboard-content" id="mainContent">
+            <!-- Content will be loaded dynamically based on navigation -->
+            <div id="pageContent">
+                <!-- Overview page content will be loaded here by default -->
+            </div>
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="dashboard-footer">
+        <div class="footer-left">
+            <span>HoneyDash v2.1.4 | UUM Cybersecurity Lab</span>
+            <span class="footer-separator">|</span>
+            <span id="connectionStatus"><i class="fas fa-circle connected"></i> Connected</span>
+            <span class="footer-separator">|</span>
+            <span id="dataRefresh">Auto-refresh: <span id="refreshInterval">30s</span></span>
+        </div>
+        <div class="footer-right">
+            <span>Last Updated: <span id="lastUpdated">14:45:23</span></span>
+            <span class="footer-separator">|</span>
+            <span><i class="fas fa-database"></i> <span id="telemetrySize">8.4 GB</span> telemetry</span>
+        </div>
+    </footer>
+
+    <!-- JavaScript Files -->
+    <script src="js/api-client.js"></script>
+    <script src="js/dashboard-data.js"></script>
+    <script src="js/dashboard-charts.js"></script>
+    <script src="js/dashboard-map.js"></script>
+    <script src="js/dashboard-updates.js"></script>
+    <script src="js/dashboard-main.js"></script>
+</body>
+
+</html>
